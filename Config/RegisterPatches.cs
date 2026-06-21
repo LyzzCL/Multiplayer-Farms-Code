@@ -27,7 +27,12 @@ namespace MPF_Code.Config
                 original: AccessTools.Method(typeof(FarmHouse), "getFrontDoorSpot"),
                 prefix: new HarmonyMethod(typeof(FrontDoorSpotPatch), nameof(FrontDoorSpotPatch.Prefix)));
 
-            if (config.Fix_Festivals)
+
+            harmony.Patch(
+                original: AccessTools.Method(typeof(StardewValley.Object), "placementAction"),
+                prefix: new HarmonyMethod(typeof(FruitTreePatch), nameof(FruitTreePatch.Prefix)));
+
+      if (config.Fix_Festivals)
             {
               harmony.Patch(
                 original: AccessTools.Method(typeof(Event), nameof(Event.exitEvent)),
