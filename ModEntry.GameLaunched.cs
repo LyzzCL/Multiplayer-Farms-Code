@@ -20,6 +20,7 @@ namespace MPF_Code
 
     private static readonly Dictionary<string, string> CabinTokenPrefix = new()
     {
+      ["Farm"] = "Farm",
       ["Custom_MPF_Wilderness"] = "Wilderness",
       ["Custom_MPF_Forest"] = "Forest",
       ["Custom_MPF_Beach"] = "Beach",
@@ -58,6 +59,7 @@ namespace MPF_Code
 
       return new()
       {
+        ["Farm"] = chosen,
         ["Custom_MPF_Wilderness"] = chosen,
         ["Custom_MPF_Forest"] = chosen,
         ["Custom_MPF_Beach"] = chosen,

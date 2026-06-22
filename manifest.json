@@ -1,10 +1,10 @@
 {
   "Name": "Multiplayer Farms",
   "Author": "LyzzCL",
-  "Version": "2.2.1",
+  "Version": "2.2.6",
   "Description": "Adds tons of farms around the valley!",
   "UniqueID": "LyzzCL.MPF_Core",
-  "UpdateKeys": [ "Nexus:26873" ],
+  "UpdateKeys": ["Nexus:26873"],
   "EntryDll": "MPF_Code.dll",
   "Dependencies": [
     {

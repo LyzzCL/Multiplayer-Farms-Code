@@ -92,7 +92,7 @@ namespace MPF_Code
       {
         var wilderness = Game1.getLocationFromName("Custom_MPF_Wilderness");
         if (wilderness is not null)
-          EnsureSlimeHutch(wilderness);
+          AddSlimeHutchStarterBuilding(wilderness);
       }
 
       if (Config.F5_Enabled && IsConfiguredFor("Meadowlands", Config.F5_Type))
@@ -108,15 +108,15 @@ namespace MPF_Code
       return string.Equals(expectedType, actualType, StringComparison.OrdinalIgnoreCase);
     }
 
-    private static void EnsureSlimeHutch(GameLocation location)
+    private static void AddSlimeHutchStarterBuilding(GameLocation location)
     {
-      foreach (Building building in location.buildings)
-      {
-        if (building.buildingType.Value == "Slime Hutch")
-          return;
-      }
+      var hutch = new Building("Slime Hutch", new Vector2(60, 13));
+      hutch.FinishConstruction(onGameStart: true);
+      hutch.LoadFromBuildingData(hutch.GetData(), forUpgrade: false, forConstruction: true);
+      hutch.load();
 
-      location.AddDefaultBuilding("Slime Hutch", new Vector2(60, 13), true);
+      ClearBuildingFootprint(location, hutch);
+      location.buildings.Add(hutch);
     }
 
     private static void AddMeadowlandsStarterBuildings(GameLocation location)
@@ -140,15 +140,33 @@ namespace MPF_Code
 
       (building.GetIndoors() as AnimalHouse)?.adoptAnimal(farmAnimal);
       (building.GetIndoors() as AnimalHouse)?.adoptAnimal(farmAnimal2);
+      ClearBuildingFootprint(location, building);
       location.buildings.Add(building);
+    }
+
+    private static void ClearBuildingFootprint(GameLocation location, Building building)
+    {
+      for (int x = building.tileX.Value; x < building.tileX.Value + building.tilesWide.Value; x++)
+      {
+        for (int y = building.tileY.Value; y < building.tileY.Value + building.tilesHigh.Value; y++)
+        {
+          var tile = new Vector2(x, y);
+          location.objects.Remove(tile);
+          location.terrainFeatures.Remove(tile);
+        }
+      }
+
+      building.removeOverlappingBushes(location);
     }
 
     private static void AddFenceLineHorizontal(GameLocation location, int startX, int endXExclusive, int y, int gateX)
     {
       for (int x = startX; x < endXExclusive; x++)
       {
+        var tile = new Vector2(x, y);
         bool isGate = x == gateX;
-        location.objects.Add(new Vector2(x, y), new Fence(new Vector2(x, y), "322", isGate));
+        location.objects.Remove(tile);
+        location.objects.Add(tile, new Fence(tile, "322", isGate));
       }
     }
 
@@ -156,8 +174,10 @@ namespace MPF_Code
     {
       for (int y = startY; y < endYExclusive; y++)
       {
+        var tile = new Vector2(x, y);
         bool isGate = y == gateY;
-        location.objects.Add(new Vector2(x, y), new Fence(new Vector2(x, y), "322", isGate));
+        location.objects.Remove(tile);
+        location.objects.Add(tile, new Fence(tile, "322", isGate));
       }
     }
 

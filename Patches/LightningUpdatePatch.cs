@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Extensions;
@@ -7,17 +9,17 @@ namespace MPF_Code.Patches
 {
     internal static class LightningUpdatePatch
     {
-      private static readonly string[] LightningLocationNames = new[]
-      {
-        "Farm",
-        "Custom_MPF_Wilderness",
-        "Custom_MPF_Forest",
-        "Custom_MPF_Beach",
-        "Custom_MPF_Riverland",
-        "Custom_MPF_Meadowlands",
-        "Custom_MPF_Hilltop",
-        "Custom_MPF_4Corners"
-      };
+        private static readonly string[] LightningLocationNames = new[]
+        {
+            "Farm",
+            "Custom_MPF_Wilderness",
+            "Custom_MPF_Forest",
+            "Custom_MPF_Beach",
+            "Custom_MPF_Riverland",
+            "Custom_MPF_Meadowlands",
+            "Custom_MPF_Hilltop",
+            "Custom_MPF_4Corners"
+        };
 
         public static bool Prefix(Utility __instance, int time_of_day)
         {
@@ -46,15 +48,29 @@ namespace MPF_Code.Patches
                         lightningStrikeEvent.createBolt = true;
                         lightningStrikeEvent.boltPosition = tile * 64f + new Vector2(32f, 0f);
 
-                        var players = Game1.getAllFarmers().ToList();
-                        if (location is Farm farm)
-                            farm.lightningStrikeEvent.Fire(lightningStrikeEvent);
-                        else if (players.Any(p => p.currentLocation == location))
-                            Game1.flashAlpha = (float)(0.5 + Game1.random.NextDouble());
-                        else if (players.Any(p => p.currentLocation.IsOutdoors && p.currentLocation.IsLightningHere()))
-                            DelayedAction.playSoundAfterDelay("thunder_small", Game1.random.Next(500, 1500));
+                        var players = Game1.getAllFarmers()
+                            .Where(p => p?.currentLocation != null)
+                            .ToList();
 
-                        Game1.playSound("thunder");
+                        bool anyPlayerInThisLocation = players.Any(p => ReferenceEquals(p.currentLocation, location));
+
+                        bool anyPlayerInLightningOutdoors = players.Any(p =>
+                        {
+                            GameLocation currentLocation = p.currentLocation;
+                            return currentLocation?.IsOutdoors == true && currentLocation.IsLightningHere();
+                        });
+
+                        bool anyPlayerOutdoors = players.Any(p => p.currentLocation?.IsOutdoors == true);
+
+                        if (location is Farm farm)
+                          farm.lightningStrikeEvent.Fire(lightningStrikeEvent);
+                        else if (anyPlayerInThisLocation)
+                          Game1.flashAlpha = (float)(0.5 + Game1.random.NextDouble());
+                        else if (anyPlayerInLightningOutdoors)
+                          DelayedAction.playSoundAfterDelay("thunder_small", Game1.random.Next(500, 1500));
+
+                        if (anyPlayerOutdoors)
+                          Game1.playSound("thunder");
                         return false;
                     }
                 }
@@ -78,6 +94,7 @@ namespace MPF_Code.Patches
         private static List<(GameLocation location, Vector2 tile)> CollectLightningRods()
         {
             List<(GameLocation location, Vector2 tile)> lightningRods = new();
+
             foreach (GameLocation location in LightningLocationNames.Select(Game1.getLocationFromName))
             {
                 if (location is null)
