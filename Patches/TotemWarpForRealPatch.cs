@@ -1,63 +1,42 @@
 using Microsoft.Xna.Framework;
+using MPF_Code.Farms;
+using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Locations;
 
 namespace MPF_Code.Patches
 {
-    internal static class TotemWarpForRealPatch
+  /// <summary>
+  /// Farm Totem: warps the player to their own cabin's front door instead of the main farmhouse.
+  /// Other totem types fall through to vanilla.
+  /// </summary>
+  internal static class TotemWarpForRealPatch
+  {
+    public static bool Prefix(StardewValley.Object __instance)
     {
-        public static bool Prefix(StardewValley.Object __instance)
-        {
-            switch (__instance.QualifiedItemId)
-            {
-                case "(O)688":
-                {
-                    FarmHouse? homeOfFarmer = Utility.getHomeOfFarmer(Game1.player);
-                    if (homeOfFarmer is not null)
-                    {
-                        Point frontDoorSpot = homeOfFarmer.getFrontDoorSpot();
-                        Game1.warpFarmer(homeOfFarmer.GetParentLocation().Name, frontDoorSpot.X, frontDoorSpot.Y, flip: false);
-                    }
-                    else if (!Game1.getFarm().TryGetMapPropertyAs("WarpTotemEntry", out Point parsed, required: false))
-                    {
-                        parsed = Game1.whichFarm switch
-                        {
-                            6 => new Point(82, 29),
-                            5 => new Point(48, 39),
-                            _ => new Point(48, 7),
-                        };
+      try
+      {
+        if (__instance.QualifiedItemId != FarmRegistry.FarmTotemQualifiedId)
+          return true; // mountain/beach/desert/island totems: unchanged from vanilla
 
-                        Game1.warpFarmer("Farm", parsed.X, parsed.Y, flip: false);
-                    }
-                    else
-                    {
-                        Game1.warpFarmer("Farm", parsed.X, parsed.Y, flip: false);
-                    }
+        FarmHouse? home = Utility.getHomeOfFarmer(Game1.player);
+        if (home is null) return true; // vanilla's WarpTotemEntry / whichFarm fallback (identical outcome)
 
-                    break;
-                }
-                case "(O)689":
-                    Game1.warpFarmer("Mountain", 31, 20, flip: false);
-                    break;
-                case "(O)690":
-                    Game1.warpFarmer("Beach", 20, 4, flip: false);
-                    break;
-                case "(O)261":
-                    Game1.warpFarmer("Desert", 35, 43, flip: false);
-                    break;
-                case "(O)886":
-                    Game1.warpFarmer("IslandSouth", 11, 11, flip: false);
-                    break;
-                default:
-                    return true;
-            }
+        Point frontDoorSpot = home.getFrontDoorSpot();
+        Game1.warpFarmer(home.GetParentLocation().Name, frontDoorSpot.X, frontDoorSpot.Y, flip: false);
 
-            Game1.fadeToBlackAlpha = 0.99f;
-            Game1.screenGlow = false;
-            Game1.player.temporarilyInvincible = false;
-            Game1.player.temporaryInvincibilityTimer = 0;
-            Game1.displayFarmer = true;
-            return false;
-        }
+        Game1.fadeToBlackAlpha = 0.99f;
+        Game1.screenGlow = false;
+        Game1.player.temporarilyInvincible = false;
+        Game1.player.temporaryInvincibilityTimer = 0;
+        Game1.displayFarmer = true;
+        return false;
+      }
+      catch (Exception ex)
+      {
+        ModServices.Monitor.LogOnce($"Farm Totem warp patch failed: {ex.Message}", LogLevel.Error);
+        return true;
+      }
     }
+  }
 }

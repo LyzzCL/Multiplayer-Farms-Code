@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewValley;
 
+// Vendored copy of the GMCM API contract; keep it in its original nullable-oblivious form.
+#nullable disable
+
 namespace GenericModConfigMenu
 {
     /// <summary>The API which lets other mods add a config UI through Generic Mod Config Menu.</summary>

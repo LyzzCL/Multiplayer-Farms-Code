@@ -5,6 +5,10 @@ using StardewValley.Locations;
 
 namespace MPF_Code.Patches
 {
+  /// <summary>
+  /// After a festival ends, warps farmhands to their own cabin instead of the main farmhouse.
+  /// Prefix captures <c>isFestival</c> before vanilla clears it; postfix redirects the exit warp.
+  /// </summary>
   internal static class EventExitEventPatch
   {
     public static void Prefix(Event __instance, out bool __state)
@@ -14,20 +18,22 @@ namespace MPF_Code.Patches
 
     public static void Postfix(Event __instance, bool __state)
     {
-      if (!Context.IsWorldReady)
-        return;
+      try
+      {
+        if (!Context.IsWorldReady || !__state) return;
 
-      if (!__state)
-        return;
+        FarmHouse? homeOfFarmer = Utility.getHomeOfFarmer(Game1.player);
+        if (homeOfFarmer is null) return;
 
-      FarmHouse? homeOfFarmer = Utility.getHomeOfFarmer(Game1.player);
-      if (homeOfFarmer == null)
-        return;
+        Point frontDoorSpot = homeOfFarmer.getFrontDoorSpot();
+        string locationName = homeOfFarmer.GetParentLocation().Name;
 
-      Point frontDoorSpot = homeOfFarmer.getFrontDoorSpot();
-      string locationName = homeOfFarmer.GetParentLocation().Name;
-
-      __instance.setExitLocation(locationName, frontDoorSpot.X, frontDoorSpot.Y);
+        __instance.setExitLocation(locationName, frontDoorSpot.X, frontDoorSpot.Y);
+      }
+      catch (Exception ex)
+      {
+        ModServices.Monitor.LogOnce($"Festival exit postfix failed: {ex.Message}", LogLevel.Error);
+      }
     }
   }
 }
