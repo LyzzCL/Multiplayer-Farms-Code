@@ -22,6 +22,9 @@
   "menu.harmony.section.title": "Harmony Patches (Requires Restart)",
   "menu.harmony.section.tooltip": "The following patches directly change base game code and require restarting the client for them to be enabled/disabled.\nOnly need to disable this if they are causing you issues (for example if you are using a mod that modifies Return Scepter behavior).",
 
+  "menu.harmony.section.title.extra": "Extra Patches",
+  "menu.harmony.section.tooltip.extra": "These patches were implemented by other modders and might require further testing so they are disabled by default.",
+
   "option.freeCabins.name": "Free Cabins",
   "option.freeCabins.tooltip": "Allows you to purchase cabins at Robin for 0g.",
   "option.starterCabins.name": "Starter Cabins",
@@ -53,6 +56,8 @@
   "option.fixEvents.tooltip": "Remove every event tied to the main farm so that it can later be replace with custom events that take into account every additional farm, expect missing translations.",
   "option.fixFestivals.name": "Fix Festivals",
   "option.fixFestivals.tooltip": "Modifies default festival end warp location and coordinates for custom farms.",
+  "option.fixPlacements.name": "Fix Trees Placement",
+  "option.fixPlacements.tooltip": "Allows to plant trees and bushes in any allowed tile on the Farms.\n\nPatch by Pet-Slime",
 
   "farm.1.title": "Farm 1 - Wilderness (Next to Bookseller)",
   "farm.1.warp.1.label": "Exit Coords",

@@ -23,7 +23,7 @@ namespace MPF_Code
         return;
       string homeLocationName = Game1.player.homeLocation.Value;
       if (string.IsNullOrWhiteSpace(homeLocationName)) return;
-      if (!HasMatchingCabin(Game1.currentLocation, homeLocationName)) return;
+      if (Game1.currentLocation != null && !HasMatchingCabin(Game1.currentLocation, homeLocationName)) return;
       DrawMailboxNotification(e.SpriteBatch, Game1.player.getMailboxPosition());
     }
 

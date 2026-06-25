@@ -14,6 +14,8 @@
         public bool Fix_Trees { get; set; } = true;
         public bool Fix_Events { get; set; } = true;
         public bool Fix_Festivals { get; set; } = true;
+        
+        public bool Fix_Placements { get; set; } = false;
 
         public bool F1_Enabled { get; set; } = true;
         public string F1_Name { get; set; } = "Wilderness";

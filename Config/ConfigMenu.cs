@@ -121,6 +121,12 @@ namespace MPF_Code.Config
       menu.AddBoolOption(mod, name: () => T("option.fixFestivals.name"),
         tooltip: () => T("option.fixFestivals.tooltip"), getValue: () => ModServices.Config.Fix_Festivals,
         setValue: value => ModServices.Config.Fix_Festivals = value);
+      
+      menu.AddSectionTitle(mod, () => T("menu.harmony.section.title.extra"), () => T("menu.harmony.section.tooltip.extra"));
+      
+      menu.AddBoolOption(mod, name: () => T("option.fixPlacements.name"),
+        tooltip: () => T("option.fixPlacements.tooltip"), getValue: () => ModServices.Config.Fix_Placements,
+        setValue: value => ModServices.Config.Fix_Placements = value);
 
       menu.AddPageLink(mod, RootPageId, () => T("menu.back"));
     }

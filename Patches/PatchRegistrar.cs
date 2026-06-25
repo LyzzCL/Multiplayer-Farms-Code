@@ -58,6 +58,12 @@ namespace MPF_Code.Patches
         Apply("Object.placementAction",
           () => harmony.Patch(AccessTools.Method(typeof(StardewValley.Object), "placementAction"),
             prefix: Method(typeof(PlacementActionPatch), nameof(PlacementActionPatch.Prefix))));
+      
+      if (config.Fix_Placements)
+        Apply("StardewValley.Object.placementAction",
+          () => harmony.Patch(
+            original: AccessTools.Method(typeof(StardewValley.Object), "placementAction"),
+            prefix: new HarmonyMethod(typeof(FruitTreePatch), nameof(FruitTreePatch.Prefix))));
     }
 
     private static HarmonyMethod Method(Type type, string name) => new(type, name);
