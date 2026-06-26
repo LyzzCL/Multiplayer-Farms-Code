@@ -121,7 +121,11 @@ namespace MPF_Code.Config
       menu.AddBoolOption(mod, name: () => T("option.fixFestivals.name"),
         tooltip: () => T("option.fixFestivals.tooltip"), getValue: () => ModServices.Config.Fix_Festivals,
         setValue: value => ModServices.Config.Fix_Festivals = value);
-      
+
+      menu.AddBoolOption(mod, name: () => T("option.editableFarmName.name"),
+        tooltip: () => T("option.editableFarmName.tooltip"), getValue: () => ModServices.Config.Editable_Farm_Name,
+        setValue: value => ModServices.Config.Editable_Farm_Name = value);
+
       menu.AddSectionTitle(mod, () => T("menu.harmony.section.title.extra"), () => T("menu.harmony.section.tooltip.extra"));
       
       menu.AddBoolOption(mod, name: () => T("option.fixPlacements.name"),

@@ -6,8 +6,7 @@ using StardewValley;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Allows Mini-Obelisk placement on MPF farms (max 2 per farm, matching vanilla).
-  /// Only intercepts custom farms; the main Farm is handled by vanilla.
+  /// Allows Mini-Obelisk placement on MPF farms (max 2 per farm, like vanilla).
   /// </summary>
   internal static class PlacementActionPatch
   {

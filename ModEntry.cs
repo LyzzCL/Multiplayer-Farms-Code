@@ -29,6 +29,7 @@ namespace MPF_Code
 
       helper.Events.GameLoop.GameLaunched += OnGameLaunched;
       helper.Events.GameLoop.DayStarted += WorldSetup.OnDayStarted;
+      helper.Events.GameLoop.OneSecondUpdateTicked += FarmhandNameStamper.OnOneSecondUpdateTicked;
       helper.Events.Display.RenderedWorld += MailboxOverlay.OnRenderedWorld;
     }
 

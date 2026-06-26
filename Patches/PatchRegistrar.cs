@@ -32,7 +32,40 @@ namespace MPF_Code.Patches
         () => harmony.Patch(AccessTools.Method(typeof(FarmHouse), "getFrontDoorSpot"),
           postfix: Method(typeof(FrontDoorSpotPatch), nameof(FrontDoorSpotPatch.Postfix))));
 
+      Apply("LoadGameMenu.SaveFileSlot.slotSubName",
+        () => harmony.Patch(AccessTools.Method(typeof(LoadGameMenu.SaveFileSlot), "slotSubName"),
+          postfix: Method(typeof(FarmhandSlotNamePatch), nameof(FarmhandSlotNamePatch.Postfix))));
+
       // ----- config-gated -----
+      if (config.Editable_Farm_Name)
+      {
+        Apply("CharacterCustomization..ctor (farmhand farm name)",
+          () => harmony.Patch(
+            AccessTools.Constructor(typeof(CharacterCustomization),
+              new[] { typeof(CharacterCustomization.Source), typeof(bool) }),
+            postfix: Method(typeof(FarmhandCreationFarmNamePatch),
+              nameof(FarmhandCreationFarmNamePatch.ConstructorPostfix))));
+
+        Apply("CharacterCustomization.update (farmhand farm name)",
+          () => harmony.Patch(
+            AccessTools.Method(typeof(CharacterCustomization), "update",
+              new[] { typeof(Microsoft.Xna.Framework.GameTime) }),
+            postfix: Method(typeof(FarmhandCreationFarmNamePatch),
+              nameof(FarmhandCreationFarmNamePatch.UpdatePostfix))));
+
+        Apply("CharacterCustomization.receiveLeftClick (farmhand farm name)",
+          () => harmony.Patch(
+            AccessTools.Method(typeof(CharacterCustomization), "receiveLeftClick"),
+            postfix: Method(typeof(FarmhandCreationFarmNamePatch),
+              nameof(FarmhandCreationFarmNamePatch.ReceiveLeftClickPostfix))));
+
+        Apply("CharacterCustomization.optionButtonClick (farmhand farm name)",
+          () => harmony.Patch(
+            AccessTools.Method(typeof(CharacterCustomization), "optionButtonClick"),
+            prefix: Method(typeof(FarmhandCreationFarmNamePatch),
+              nameof(FarmhandCreationFarmNamePatch.OptionButtonClickPrefix))));
+      }
+
       if (config.Fix_Festivals)
         Apply("Event.exitEvent",
           () => harmony.Patch(AccessTools.Method(typeof(Event), nameof(Event.exitEvent)),
@@ -58,7 +91,7 @@ namespace MPF_Code.Patches
         Apply("Object.placementAction",
           () => harmony.Patch(AccessTools.Method(typeof(StardewValley.Object), "placementAction"),
             prefix: Method(typeof(PlacementActionPatch), nameof(PlacementActionPatch.Prefix))));
-      
+
       if (config.Fix_Placements)
         Apply("StardewValley.Object.placementAction",
           () => harmony.Patch(

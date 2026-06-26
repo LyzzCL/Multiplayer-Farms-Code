@@ -8,8 +8,7 @@ using StardewValley.TerrainFeatures;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Extends lightning rod charging to all MPF farms.
-  /// Replaces vanilla logic to collect rods from all farm locations; emulates strike effects on non-Farm locations.
+  /// Extends lightning-rod charging to all MPF farms, emulating strike effects on non-Farm locations.
   /// </summary>
   internal static class LightningUpdatePatch
   {

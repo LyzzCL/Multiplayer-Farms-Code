@@ -5,8 +5,7 @@ using StardewValley.Menus;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Allows placing cabins on MPF farms via Robin's build menu.
-  /// Vanilla only permits cabins on "Farm"; this postfix extends it to MPF farm locations.
+  /// Lets Robin's build menu place cabins on MPF farms (vanilla allows only "Farm").
   /// </summary>
   internal static class IsValidBuildingForLocationPatch
   {

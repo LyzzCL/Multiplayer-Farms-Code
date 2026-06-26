@@ -7,8 +7,7 @@ using StardewValley.Tools;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Return Scepter: warps the player to their own cabin's front door instead of the main farmhouse.
-  /// Falls through to vanilla if no home is found or on error.
+  /// Return Scepter: warps the player to their own cabin's front door; falls through to vanilla otherwise.
   /// </summary>
   internal static class WandWarpForRealPatch
   {

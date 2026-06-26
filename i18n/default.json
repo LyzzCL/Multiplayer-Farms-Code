@@ -36,7 +36,7 @@
 
   "option.enable.name": "Enable",
   "option.farmName.name": "Name",
-  "option.farmName.tooltip": "Default: {{name}}",
+  "option.farmName.tooltip": "Default: {{name}}\n\nNOTE: This config doesn't require save reload if farm rename patch is enabled.",
   "option.direction.name": "Direction",
   "option.direction.tooltip": "Choose the warp direction for {{label}}. \n\n[WIP] Feature, only works on Farm 7",
   "option.farmType.name": "Type",
@@ -53,9 +53,11 @@
   "option.fixTrees.name": "Fix Trees",
   "option.fixTrees.tooltip": "Fixes the issue of trees spawning/growing very often.",
   "option.fixEvents.name": "Fix Events [WIP]",
-  "option.fixEvents.tooltip": "Remove every event tied to the main farm so that it can later be replace with custom events that take into account every additional farm, expect missing translations.",
+  "option.fixEvents.tooltip": "Remove every event tied to the main farm so that it can later be replace with custom events that take into account every additional farm.",
   "option.fixFestivals.name": "Fix Festivals",
   "option.fixFestivals.tooltip": "Modifies default festival end warp location and coordinates for custom farms.",
+  "option.editableFarmName.name": "Editable Farm Name",
+  "option.editableFarmName.tooltip": "Lets a joining farmhand rename the additional farm of the empty cabin they pick, from the editable 'Farm Name' field in the character creation screen. The new name is saved to the host's config and shown in-world (Robin's build menu, map) on every player without a restart. Disable if it causes issues with the character creation screen.",
   "option.fixPlacements.name": "Fix Trees Placement",
   "option.fixPlacements.tooltip": "Allows to plant trees and bushes in any allowed tile on the Farms.\n\nPatch by Pet-Slime",
 

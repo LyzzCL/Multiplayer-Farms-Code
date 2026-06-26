@@ -7,8 +7,7 @@ using StardewValley.Locations;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Farm Totem: warps the player to their own cabin's front door instead of the main farmhouse.
-  /// Other totem types fall through to vanilla.
+  /// Farm Totem: warps the player to their own cabin's front door; other totems fall through to vanilla.
   /// </summary>
   internal static class TotemWarpForRealPatch
   {

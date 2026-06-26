@@ -6,8 +6,7 @@ using StardewValley.Buildings;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Points <see cref="Farmer.getMailboxPosition"/> at the farmhand's own cabin mailbox.
-  /// Vanilla only searches the main Farm; this postfix finds the cabin across all locations.
+  /// Points a farmhand's mailbox at their own cabin (vanilla only searches the main Farm).
   /// </summary>
   internal static class MailboxPositionPatch
   {

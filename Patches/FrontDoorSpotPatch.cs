@@ -7,8 +7,7 @@ using StardewValley.Locations;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// Fixes <see cref="FarmHouse.getFrontDoorSpot"/> for cabins on MPF farms.
-  /// Vanilla only finds warps targeting "Farm"; this postfix resolves the correct warp for custom farms.
+  /// Resolves the front-door spot for cabins on MPF farms (vanilla only handles warps targeting "Farm").
   /// </summary>
   internal static class FrontDoorSpotPatch
   {

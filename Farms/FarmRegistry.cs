@@ -16,6 +16,25 @@ namespace MPF_Code.Farms
     public const string FarmTotemQualifiedId = "(O)688";
     public const string FenceItemId = "322";
 
+    /// <summary>
+    /// modData key (SMAPI-namespaced) the host stamps on each farmhand Farmer with the display
+    /// name of its cabin's MPF location. Read by the client to label the farmhand-join menu slot.
+    /// </summary>
+    public const string HomeFarmNameModDataKey = "LyzzCL.MPF_Core/HomeFarmName";
+
+    /// <summary>
+    /// modData key (SMAPI-namespaced) a client sets on its own Farmer during farmhand creation to
+    /// request renaming its cabin's MPF farm. The host reads it, writes the config, then clears it.
+    /// </summary>
+    public const string RequestedFarmNameModDataKey = "LyzzCL.MPF_Core/RequestedFarmName";
+
+    /// <summary>
+    /// modData key the host stamps on each MPF farm's <c>GameLocation</c> with its current name. Net-syncs
+    /// to every client, which mirrors it onto the location's <c>DisplayName</c> so renames show in-world
+    /// without a reload.
+    /// </summary>
+    public const string LocationDisplayNameModDataKey = "LyzzCL.MPF_Core/LocationDisplayName";
+
     // Main Farm is included for event/lightning tokens, but is not an MpfFarm.
     public const string MainFarmLocation = "Farm";
     public const string MainFarmEventPrefix = "Farm";

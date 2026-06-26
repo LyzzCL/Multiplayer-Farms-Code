@@ -6,8 +6,8 @@ using StardewValley.Locations;
 namespace MPF_Code.Patches
 {
   /// <summary>
-  /// After a festival ends, warps farmhands to their own cabin instead of the main farmhouse.
-  /// Prefix captures <c>isFestival</c> before vanilla clears it; postfix redirects the exit warp.
+  /// Warps a farmhand to their own cabin after a festival, not the main farmhouse.
+  /// (Prefix saves <c>isFestival</c> before vanilla clears it; postfix redirects the warp.)
   /// </summary>
   internal static class EventExitEventPatch
   {
